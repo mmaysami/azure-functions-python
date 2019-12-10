@@ -83,10 +83,10 @@ For local code development and debugging, you can define an application setting 
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "Values": {
       "FUNCTIONS_WORKER_RUNTIME": "python",
-      "dbConnectionValue": "Driver={ODBC Driver 13 for SQL Server};Server=tcp:<your db server>.database.windows.net,1433;Database=<your db>;Uid=<your user>@<your db>;Pwd=<your pass>;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+      "dbConnectionValue": "Driver={ODBC Driver 13 for SQL Server};Server=tcp:<your db server>.database.windows.net,1433;Database=<your db name>;Uid=<your user>@<your db server>;Pwd=<your pass>;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
     },
     "ConnectionStrings": {
-      "sqlConnectionString": "Driver={ODBC Driver 17 for SQL Server};Server=tcp:<your db server>.database.windows.net,1433;Database=<your db>;Uid=<your user>@<your db>;Pwd=<your pass>;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+      "sqlConnectionString": "Driver={ODBC Driver 17 for SQL Server};Server=tcp:<your db server>.database.windows.net,1433;Database=<your db name>;Uid=<your user>@<your db server>;Pwd=<your pass>;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
     }
   }
 ```
@@ -139,7 +139,7 @@ Note that this feature will require a docker daemon (e.g. docker desktop for win
 
  > **Name:** "sqlConnectionString"
  >
- > **Value:** "Driver={ODBC Driver 17 for SQL Server};Server=tcp:\<your db server\>.database.windows.net,1433;Database=\<your db\>;Uid=\<your user\>@\<your db\>;Pwd=\<your pass\>;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+ > **Value:** "Driver={ODBC Driver 17 for SQL Server};Server=tcp:\<your db server\>.database.windows.net,1433;Database=\<your db name\>;Uid=\<your user\>@\<your db server\>;Pwd=\<your pass\>;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
  >
  > **Type:** 'SQLAzure'
 
