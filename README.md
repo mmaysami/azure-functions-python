@@ -13,11 +13,11 @@ Run the function apps from your command line locally.
 VS Code IDE provides more control fpr local deployment while providing debugging, repo control, and also deployment to azure portal as integrated features.
 
 1. Install Azure Extensions:
- - Azure Account 
- - Azure CLI Tools
- - Azure Functions
- - Azure Repos
- - Python
+	 - Azure Account 
+	 - Azure CLI Tools
+	 - Azure Functions
+	 - Azure Repos
+	 - Python
  
  
 2. Open GM Folder
@@ -27,7 +27,7 @@ VS Code IDE provides more control fpr local deployment while providing debugging
 
 Sample of `.vscode\settings.json` setting if local folder `.venv` is selected and set as python interpreter:
 ```json
-		# .vscode\settings.json
+	# .vscode\settings.json
 	{
 	  "azureFunctions.pythonVenv": ".venv",
 	  "python.pythonPath": ".venv\\Scripts\\python.exe",
@@ -46,7 +46,7 @@ Sample of `.vscode\settings.json` using conda environment as python interpreter.
 This might require a single time running of `conda init powershell` command in terminal window of VS Code.
 
 ```json
-		# .vscode\settings.json
+	# .vscode\settings.json
 	{
 	  "azureFunctions.pythonVenv": "%CONDAPATH%\\envs\\azure",
 	  "python.pythonPath": "%CONDAPATH%\\azure\\Scripts\\python.exe",
