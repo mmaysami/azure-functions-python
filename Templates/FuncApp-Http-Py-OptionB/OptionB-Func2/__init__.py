@@ -4,14 +4,15 @@ import time
 import azure.functions as func
 from .. import ToolsB as tools
 
-
 def main(req: func.HttpRequest) -> func.HttpResponse:
     start = time.time()
     logging.info('Python HTTP trigger function processed a request.')
 
     try:
+        # Decode and return request body as JSON
         req_body = req.get_json()
     except ValueError:
+        numA, numB = None, None
         pass
     else:
         numA = req_body.get('A')

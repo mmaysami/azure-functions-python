@@ -9,8 +9,10 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     try:
+        # Decode and return request body as JSON
         req_body = req.get_json()
     except ValueError:
+        numA, numB = None, None
         pass
     else:
         numA = req_body.get('A')

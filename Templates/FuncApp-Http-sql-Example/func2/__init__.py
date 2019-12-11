@@ -14,9 +14,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     start = time.time()
     logging.info('Python HTTP trigger function processed a request.')
 
+    # Decode 'Name', HTTP Get (URL) Params
     num = req.params.get('number')
     if not num:
         try:
+            # Decode and return request body as JSON
             req_body = req.get_json()
         except ValueError:
             pass
@@ -75,10 +77,10 @@ def test_sql():
 
     except Exception as e1:
         try:
-            connStr = "dbConnectionString"
+            connStr = "dbConnectionValue"
             db = pyodbc.connect( os.environ.get(connStr) )
         except Exception as e2:
-            return "%s \n %s" %(str(e1),str(e2))
+            return "%s \n %s" %(str(e1),str(e2)), os.environ.get(connStr)
         
 
 

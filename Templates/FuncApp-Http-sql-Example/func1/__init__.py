@@ -8,9 +8,11 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     start = time.time()
     logging.info('Python HTTP trigger function processed a request.')
 
+    # Decode 'Name', HTTP Get (URL) Params
     name = req.params.get('name')
     if not name:
         try:
+            # Decode and return request body as JSON
             req_body = req.get_json()
         except ValueError:
             pass
@@ -18,25 +20,27 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             name = req_body.get('name')
 
     if name:
-        val1 = os.environ.get("FUNCTIONS_WORKER_RUNTIME")
-        val2 = os.environ.get("dbConnectionString")
-        sql1 = os.environ.get("SQLAZURECONNSTR_sqlConnectionString")
-        sql2 = os.environ.get("SQLCONNSTR_sqlConnectionString")
-        if isinstance(val2,str):
-            val2 = val2[0:10]
-        if isinstance(sql1,str):
-            sql1 = sql1[0:10]
-        if isinstance(sql2,str):
-            sql2 = sql2[0:10] 
+        envVal1 = os.environ.get("FUNCTIONS_WORKER_RUNTIME")
+        envVal2 = os.environ.get("dbConnectionValue")
+        connStr1 = os.environ.get("SQLAZURECONNSTR_sqlConnectionString")
+        connStr2 = os.environ.get("SQLCONNSTR_sqlConnectionString")
+        if isinstance(envVal2,str):
+            envVal2 = envVal2[0:23]
+        if isinstance(connStr1,str):
+            connStr1 = connStr1[0:23]
+        if isinstance(connStr2,str):
+            connStr2 = connStr2[0:23] 
 
         l1 = f"Hello {name} from Linux function app 1! \n\n"
-        l2 = f"WORKER           : {val1}    \n"
-        l3 = f"DB       CONNSTR : {val2} ...\n"        
-        l4 = f"SQLAZURE CONNSTR : {sql1} ...\n"
-        l5 = f"SQL      CONNSTR : {sql2} ...\n\n"
+        l2 = f"Environment Variables \n"
+        l3 = f"WORKER           : {envVal1}    \n"
+        l4 = f"DB       Values  : {envVal2} ...\n\n"        
+        l5 = f"Environment Connection Strings \n"
+        l6 = f"SQLAZURE CONNSTR : {connStr1} ...\n"
+        l7 = f"SQL      CONNSTR : {connStr2} ...\n\n"
         dt = time.time()-start
-        l6 = f"Total Time Elapsed(s) : {dt} \n"
-        return func.HttpResponse(l1 + l2 + l3 + l4 + l5 + l6)
+        l8 = f"Total Time Elapsed(s) : {dt} \n"
+        return func.HttpResponse(l1 + l2 + l3 + l4 + l5 + l6 + l7 + l8)
     else:
         dt = time.time()-start
         return func.HttpResponse(
