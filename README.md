@@ -5,29 +5,33 @@ Samples / Templates of Azure Function Apps with Python
 
 ### Command Line
 Run the function apps from your command line locally.
-1. Make sure [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#v2) is installed.  
+1. Make sure [Azure Functions Core Tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local#v2) 
+is installed.  
 2. Make sure `python 3.6+` and required libraries are installed.     
 3. Make sure you are on the `azure` branch. Use command `func host start` to run the function app locally.   
 
 ### VS Code
-VS Code IDE provides more control fpr local deployment while providing debugging, repo control, and also deployment to azure portal as integrated features.
+VS Code IDE provides more control fpr local deployment while providing debugging, repo control, and also 
+deployment to azure portal as integrated features.
 
 1. Install Azure Extensions:
-	 - Azure Account 
-	 - Azure CLI Tools
-	 - Azure Functions
-	 - Azure Repos
-	 - Python
+ - Azure Account 
+ - Azure CLI Tools
+ - Azure Functions
+ - Azure Repos
+ - Python
  
  
 2. Open GM Folder
-3. Open Command Pallette (`Ctrl+Shift+P` or `F1`), and select  `Azure Functions: Initialize Project for use with VS Code` and follow prompts
+3. Open Command Pallette (`Ctrl+Shift+P` or `F1`), and select `Azure Functions: Initialize Project for use with VS Code` 
+and follow prompts
 
-4. Open Command Pallette (`Ctrl+Shift+P` or `F1`), and select  `Python: Select Interpreter` and select eithe conda environments or relative venv created.
+4. Open Command Pallette (`Ctrl+Shift+P` or `F1`), and select `Python: Select Interpreter` and select 
+either conda environments or relative venv created.
 
 Sample of `.vscode\settings.json` setting if local folder `.venv` is selected and set as python interpreter:
 ```json
-	# .vscode\settings.json
+		# .vscode\settings.json
 	{
 	  "azureFunctions.pythonVenv": ".venv",
 	  "python.pythonPath": ".venv\\Scripts\\python.exe",
@@ -41,12 +45,15 @@ Sample of `.vscode\settings.json` setting if local folder `.venv` is selected an
 ```
 
 
-Sample of `.vscode\settings.json` using conda environment as python interpreter. This assumes a windows environment variable `CONDAPATH` is defined pointing to conda installation path.  It can be replaced with absolute path of conda which in default case is as follow  `CONDAPATH = 'C:\Users\<YOUR USERNAME>\AppData\Local\Continuum\miniconda3\'`.
+Sample of `.vscode\settings.json` using conda environment as python interpreter. This assumes a 
+windows environment variable `CONDAPATH` is defined pointing to conda installation path.  
+It can be replaced with absolute path of conda which in default case is as follow  
+`CONDAPATH = 'C:\Users\<YOUR USERNAME>\AppData\Local\Continuum\miniconda3\'`.
 
 This might require a single time running of `conda init powershell` command in terminal window of VS Code.
 
 ```json
-	# .vscode\settings.json
+		# .vscode\settings.json
 	{
 	  "azureFunctions.pythonVenv": "%CONDAPATH%\\envs\\azure",
 	  "python.pythonPath": "%CONDAPATH%\\azure\\Scripts\\python.exe",
@@ -74,7 +81,10 @@ The other example provides the basis for handling Azure SQL servers and database
 Note the deployment details mentioned in following sections.
 
 ### Local Settings with DB (VS Code)
-For local code development and debugging, you can define an application setting variable, e.g.  `'dbConnectionValue'`, under `'Values'` element of `'local.settings.json'`. Note that in example shown below, the variable `'dbConnectionValue'` is visible in python code during local deployment and debugging.
+For local code development and debugging, you can define an application setting variable, 
+e.g.  `'dbConnectionValue'`, under `'Values'` element of `'local.settings.json'`. 
+Note that in example shown below, the variable `'dbConnectionValue'` is visible in python code during 
+local deployment and debugging.
 ```json
   # local.settings.json
 
@@ -90,8 +100,11 @@ For local code development and debugging, you can define an application setting 
     }
   }
 ```
-Since `'SQLAZURECONNSTR_sqlConnectionString'` is not available in local deployment environment, we
-After the configuration is completed, to have a smooth database access  string variable for database is available to python scripts and can be accessed as  + **name of connection string** (e.g. *'sqlConnectionString'* in the above setup):
+Environment variable `'SQLAZURECONNSTR_sqlConnectionString'` is not available in local deployment 
+(see [Azure Git Issue](https://github.com/Azure/Azure-Functions/issues/717)).
+ In order to have a smooth database access after the configuration is completed, string variable for database is 
+ available to python scripts and can be accessed as  `'SQLAZURECONNSTR_'`+ **name of connection string** 
+ (e.g. *'sqlConnectionString'* in the above setup):
 
    ```Python
      # Azure Function:  Python Code
@@ -115,15 +128,19 @@ After the configuration is completed, to have a smooth database access  string v
    ```
 
 #### Local Deployment/Debugging Settings with DB (VS Code)
-For deployment of code developed locally, if you have database connection (e.g. using pyodbc), you want to build dependencies locally to avoid `pyodbc` module not found error when deployed and triggered via azure portal. 
+For deployment of code developed locally, if you have database connection (e.g. using pyodbc), 
+you want to build dependencies locally to avoid `pyodbc` module not found error when deployed and 
+triggered via azure portal. 
 
-Once the azure function project is initialized for use in VS code, the  `azureFunctions.preDeployTask` parameter in  `.vscode\settings.json` can be modified as 
+Once the azure function project is initialized for use in VS code, 
+the `azureFunctions.preDeployTask` parameter in  `.vscode\settings.json` can be modified as 
 ```json
   # .vscode\settings.json
 	"azureFunctions.preDeployTask": "func: pack --build-native-deps"
 ```
 
-Note that this feature will require a docker daemon (e.g. docker desktop for windows) to be running. The docker needs to be running with linux containers.
+Note that this feature will require a docker daemon (e.g. docker desktop for windows) to be running. 
+The docker needs to be running with linux containers.
 
 
 ### Azure Portal Deployment Settings with DB
@@ -143,11 +160,14 @@ Note that this feature will require a docker daemon (e.g. docker desktop for win
  >
  > **Type:** 'SQLAzure'
 
- **Warning:** The connection string can be obtained from your Azure SQL with ODBC; However, be sure to use `ODBC Driver 17` as <s>`ODBC Driver 13`</s> is *NOT* working on azure portal.
+ **Warning:** The connection string can be obtained from your Azure SQL with ODBC; 
+ However, be sure to use `ODBC Driver 17` as <s>`ODBC Driver 13`</s> is *NOT* working on azure portal.
+ 
    - Press *'OK'* on 'Add/Edit connection string' dialogue opened
    - Press *'Save'* button on top of Configuration
 
-After the configuration is completed, the connection string variable for database is available to python scripts and can be accessed as `'SQLAZURECONNSTR_'` + **name of connection string** (e.g. *'sqlConnectionString'* in the above setup):
+After the configuration is completed, the connection string variable for database is available to python scripts and 
+can be accessed as `'SQLAZURECONNSTR_'` + **name of connection string** (e.g. *'sqlConnectionString'* in the above setup):
    ```Python
      # Azure Function:  Python Code
      # Database Connection String can be accessed in python as below
@@ -156,10 +176,13 @@ After the configuration is completed, the connection string variable for databas
      cursor = db.cursor()
      cursor.execute("SELECT * FROM table1")    
    ```
-Alternatively as discuss below for local deployment, the connection string can  be defined as a variable under *'Application settings'* and used in python. The steps to add an application setting variable is quite similar to adding connection string except it is initiated with the following:
+Alternatively as discuss below for local deployment, the connection string can  be defined as a 
+variable under *'Application settings'* and used in python. The steps to add an application setting variable is 
+quite similar to adding connection string except it is initiated with the following:
  - Press *'New application setting'* Under *'Application settings'* section
 
-After the configuration is completed, the application setting variable for database is available to python scripts and can be accessed as **name of application setting variable** (e.g. *'sqlConnectionValue'*):
+After the configuration is completed, the application setting variable for database is available to python scripts and 
+can be accessed as **name of application setting variable** (e.g. *'sqlConnectionValue'*):
   ```Python
     # Azure Function:  Python Code
     # Database Connection String can be accessed in python as below
@@ -168,5 +191,3 @@ After the configuration is completed, the application setting variable for datab
     cursor = db.cursor()
     cursor.execute("SELECT * FROM table1")    
   ```
-
-
